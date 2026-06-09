@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CustomCalendarView extends StatefulWidget {
-  const CustomCalendarView(
-      {Key? key,
-      this.initialStartDate,
-      this.initialEndDate,
-      this.startEndDateChange,
-      this.minimumDate,
-      this.maximumDate})
-      : super(key: key);
+  const CustomCalendarView({
+    super.key,
+    this.initialStartDate,
+    this.initialEndDate,
+    this.startEndDateChange,
+    this.minimumDate,
+    this.maximumDate,
+  });
 
   final DateTime? minimumDate;
   final DateTime? maximumDate;
@@ -70,8 +70,12 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding:
-                const EdgeInsets.only(left: 8.0, right: 8.0, top: 4, bottom: 4),
+            padding: const EdgeInsets.only(
+              left: 8.0,
+              right: 8.0,
+              top: 4,
+              bottom: 4,
+            ),
             child: Row(
               children: <Widget>[
                 Padding(
@@ -80,8 +84,9 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                     height: 38,
                     width: 38,
                     decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(24.0)),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(24.0),
+                      ),
                       border: Border.all(
                         color: HotelAppTheme.buildLightTheme().dividerColor,
                       ),
@@ -89,12 +94,16 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(24.0)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(24.0),
+                        ),
                         onTap: () {
                           setState(() {
-                            currentMonthDate = DateTime(currentMonthDate.year,
-                                currentMonthDate.month, 0);
+                            currentMonthDate = DateTime(
+                              currentMonthDate.year,
+                              currentMonthDate.month,
+                              0,
+                            );
                             setListOfDate(currentMonthDate);
                           });
                         },
@@ -111,9 +120,10 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                     child: Text(
                       DateFormat('MMMM, yyyy').format(currentMonthDate),
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20,
-                          color: Colors.black),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
@@ -123,8 +133,9 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                     height: 38,
                     width: 38,
                     decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(24.0)),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(24.0),
+                      ),
                       border: Border.all(
                         color: HotelAppTheme.buildLightTheme().dividerColor,
                       ),
@@ -132,12 +143,16 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(24.0)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(24.0),
+                        ),
                         onTap: () {
                           setState(() {
-                            currentMonthDate = DateTime(currentMonthDate.year,
-                                currentMonthDate.month + 2, 0);
+                            currentMonthDate = DateTime(
+                              currentMonthDate.year,
+                              currentMonthDate.month + 2,
+                              0,
+                            );
                             setListOfDate(currentMonthDate);
                           });
                         },
@@ -154,15 +169,11 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
           ),
           Padding(
             padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
-            child: Row(
-              children: getDaysNameUI(),
-            ),
+            child: Row(children: getDaysNameUI()),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 8, left: 8),
-            child: Column(
-              children: getDaysNoUI(),
-            ),
+            child: Column(children: getDaysNoUI()),
           ),
         ],
       ),
@@ -178,9 +189,10 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
             child: Text(
               DateFormat('EEE').format(dateList[i]),
               style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: HotelAppTheme.buildLightTheme().primaryColor),
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: HotelAppTheme.buildLightTheme().primaryColor,
+              ),
             ),
           ),
         ),
@@ -209,19 +221,20 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                         color: Colors.transparent,
                         child: Padding(
                           padding: EdgeInsets.only(
-                              top: 2,
-                              bottom: 2,
-                              left: isStartDateRadius(date) ? 4 : 0,
-                              right: isEndDateRadius(date) ? 4 : 0),
+                            top: 2,
+                            bottom: 2,
+                            left: isStartDateRadius(date) ? 4 : 0,
+                            right: isEndDateRadius(date) ? 4 : 0,
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: startDate != null && endDate != null
                                   ? getIsItStartAndEndDate(date) ||
-                                          getIsInRange(date)
-                                      ? HotelAppTheme.buildLightTheme()
-                                          .primaryColor
-                                          .withOpacity(0.4)
-                                      : Colors.transparent
+                                            getIsInRange(date)
+                                        ? HotelAppTheme.buildLightTheme()
+                                              .primaryColor
+                                              .withValues(alpha: 0.4)
+                                        : Colors.transparent
                                   : Colors.transparent,
                               borderRadius: BorderRadius.only(
                                 bottomLeft: isStartDateRadius(date)
@@ -245,37 +258,42 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(32.0)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(32.0),
+                        ),
                         onTap: () {
                           if (currentMonthDate.month == date.month) {
                             if (widget.minimumDate != null &&
                                 widget.maximumDate != null) {
                               final DateTime newminimumDate = DateTime(
-                                  widget.minimumDate!.year,
-                                  widget.minimumDate!.month,
-                                  widget.minimumDate!.day - 1);
+                                widget.minimumDate!.year,
+                                widget.minimumDate!.month,
+                                widget.minimumDate!.day - 1,
+                              );
                               final DateTime newmaximumDate = DateTime(
-                                  widget.maximumDate!.year,
-                                  widget.maximumDate!.month,
-                                  widget.maximumDate!.day + 1);
+                                widget.maximumDate!.year,
+                                widget.maximumDate!.month,
+                                widget.maximumDate!.day + 1,
+                              );
                               if (date.isAfter(newminimumDate) &&
                                   date.isBefore(newmaximumDate)) {
                                 onDateClick(date);
                               }
                             } else if (widget.minimumDate != null) {
                               final DateTime newminimumDate = DateTime(
-                                  widget.minimumDate!.year,
-                                  widget.minimumDate!.month,
-                                  widget.minimumDate!.day - 1);
+                                widget.minimumDate!.year,
+                                widget.minimumDate!.month,
+                                widget.minimumDate!.day - 1,
+                              );
                               if (date.isAfter(newminimumDate)) {
                                 onDateClick(date);
                               }
                             } else if (widget.maximumDate != null) {
                               final DateTime newmaximumDate = DateTime(
-                                  widget.maximumDate!.year,
-                                  widget.maximumDate!.month,
-                                  widget.maximumDate!.day + 1);
+                                widget.maximumDate!.year,
+                                widget.maximumDate!.month,
+                                widget.maximumDate!.day + 1,
+                              );
                               if (date.isBefore(newmaximumDate)) {
                                 onDateClick(date);
                               }
@@ -291,8 +309,9 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                               color: getIsItStartAndEndDate(date)
                                   ? HotelAppTheme.buildLightTheme().primaryColor
                                   : Colors.transparent,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(32.0)),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(32.0),
+                              ),
                               border: Border.all(
                                 color: getIsItStartAndEndDate(date)
                                     ? Colors.white
@@ -302,9 +321,12 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                               boxShadow: getIsItStartAndEndDate(date)
                                   ? <BoxShadow>[
                                       BoxShadow(
-                                          color: Colors.grey.withOpacity(0.6),
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 0)),
+                                        color: Colors.grey.withValues(
+                                          alpha: 0.6,
+                                        ),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 0),
+                                      ),
                                     ]
                                   : null,
                             ),
@@ -312,18 +334,19 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                               child: Text(
                                 '${date.day}',
                                 style: TextStyle(
-                                    color: getIsItStartAndEndDate(date)
-                                        ? Colors.white
-                                        : currentMonthDate.month == date.month
-                                            ? Colors.black
-                                            : Colors.grey.withOpacity(0.6),
-                                    fontSize:
-                                        MediaQuery.of(context).size.width > 360
-                                            ? 18
-                                            : 16,
-                                    fontWeight: getIsItStartAndEndDate(date)
-                                        ? FontWeight.bold
-                                        : FontWeight.normal),
+                                  color: getIsItStartAndEndDate(date)
+                                      ? Colors.white
+                                      : currentMonthDate.month == date.month
+                                      ? Colors.black
+                                      : Colors.grey.withValues(alpha: 0.6),
+                                  fontSize:
+                                      MediaQuery.of(context).size.width > 360
+                                      ? 18
+                                      : 16,
+                                  fontWeight: getIsItStartAndEndDate(date)
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                ),
                               ),
                             ),
                           ),
@@ -338,15 +361,17 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                         height: 6,
                         width: 6,
                         decoration: BoxDecoration(
-                            color: DateTime.now().day == date.day &&
-                                    DateTime.now().month == date.month &&
-                                    DateTime.now().year == date.year
-                                ? getIsInRange(date)
+                          color:
+                              DateTime.now().day == date.day &&
+                                  DateTime.now().month == date.month &&
+                                  DateTime.now().year == date.year
+                              ? getIsInRange(date)
                                     ? Colors.white
                                     : HotelAppTheme.buildLightTheme()
-                                        .primaryColor
-                                : Colors.transparent,
-                            shape: BoxShape.circle),
+                                          .primaryColor
+                              : Colors.transparent,
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
                   ],
@@ -357,12 +382,14 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
         );
         count += 1;
       }
-      noList.add(Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: listUI,
-      ));
+      noList.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: listUI,
+        ),
+      );
     }
     return noList;
   }

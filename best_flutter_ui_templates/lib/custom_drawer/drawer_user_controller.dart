@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class DrawerUserController extends StatefulWidget {
   const DrawerUserController({
-    Key? key,
+    super.key,
     this.drawerWidth = 250,
     this.onDrawerCall,
     this.screenView,
@@ -12,7 +12,7 @@ class DrawerUserController extends StatefulWidget {
     this.menuView,
     this.drawerIsOpen,
     this.screenIndex,
-  }) : super(key: key);
+  });
 
   final double drawerWidth;
   final Function(DrawerIndex)? onDrawerCall;
@@ -44,7 +44,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
       vsync: this,
       duration: const Duration(milliseconds: 0),
     );
-    iconAnimationController?..animateTo(
+    iconAnimationController?.animateTo(
       1.0,
       duration: const Duration(milliseconds: 0),
       curve: Curves.fastOutSlowIn,
@@ -52,7 +52,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
     scrollController = ScrollController(
       initialScrollOffset: widget.drawerWidth,
     );
-    scrollController!..addListener(() {
+    scrollController!.addListener(() {
       if (scrollController!.offset <= 0) {
         if (scrolloffset != 1.0) {
           setState(() {
@@ -130,9 +130,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                         0.0,
                       ),
                       child: HomeDrawer(
-                        screenIndex: widget.screenIndex == null
-                            ? DrawerIndex.HOME
-                            : widget.screenIndex,
+                        screenIndex: widget.screenIndex ?? DrawerIndex.HOME,
                         iconAnimationController: iconAnimationController,
                         callBackIndex: (DrawerIndex indexType) {
                           onDrawerClick();
@@ -154,7 +152,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                     color: AppTheme.white,
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: AppTheme.grey.withOpacity(0.6),
+                        color: AppTheme.grey.withValues(alpha: 0.6),
                         blurRadius: 24,
                       ),
                     ],
@@ -190,17 +188,17 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                               ),
                               child: Center(
                                 // if you use your own menu view UI you add form initialization
-                                child: widget.menuView != null
-                                    ? widget.menuView
-                                    : AnimatedIcon(
-                                        color: isLightMode
-                                            ? AppTheme.darkGrey
-                                            : AppTheme.white,
-                                        icon:
-                                            widget.animatedIconData ??
-                                            AnimatedIcons.arrow_menu,
-                                        progress: iconAnimationController!,
-                                      ),
+                                child:
+                                    widget.menuView ??
+                                    AnimatedIcon(
+                                      color: isLightMode
+                                          ? AppTheme.darkGrey
+                                          : AppTheme.white,
+                                      icon:
+                                          widget.animatedIconData ??
+                                          AnimatedIcons.arrow_menu,
+                                      progress: iconAnimationController!,
+                                    ),
                               ),
                               onTap: () {
                                 FocusScope.of(

@@ -4,9 +4,11 @@ import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 
 class WaterView extends StatefulWidget {
-  const WaterView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
-      : super(key: key);
+  const WaterView({
+    super.key,
+    this.mainScreenAnimationController,
+    this.mainScreenAnimation,
+  });
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
@@ -30,28 +32,41 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
           opacity: widget.mainScreenAnimation!,
           child: Transform(
             transform: Matrix4.translationValues(
-                0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
+              0.0,
+              30 * (1.0 - widget.mainScreenAnimation!.value),
+              0.0,
+            ),
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 24, right: 24, top: 16, bottom: 18),
+                left: 24,
+                right: 24,
+                top: 16,
+                bottom: 18,
+              ),
               child: Container(
                 decoration: BoxDecoration(
                   color: FitnessAppTheme.white,
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(68.0)),
+                    topLeft: Radius.circular(8.0),
+                    bottomLeft: Radius.circular(8.0),
+                    bottomRight: Radius.circular(8.0),
+                    topRight: Radius.circular(68.0),
+                  ),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.grey.withOpacity(0.2),
-                        offset: const Offset(1.1, 1.1),
-                        blurRadius: 10.0),
+                      color: FitnessAppTheme.grey.withValues(alpha: 0.2),
+                      offset: const Offset(1.1, 1.1),
+                      blurRadius: 10.0,
+                    ),
                   ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 16, left: 16, right: 16, bottom: 16),
+                    top: 16,
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                  ),
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -67,7 +82,9 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                   children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 4, bottom: 3),
+                                        left: 4,
+                                        bottom: 3,
+                                      ),
                                       child: Text(
                                         '2100',
                                         textAlign: TextAlign.center,
@@ -81,7 +98,9 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 8, bottom: 8),
+                                        left: 8,
+                                        bottom: 8,
+                                      ),
                                       child: Text(
                                         'ml',
                                         textAlign: TextAlign.center,
@@ -98,7 +117,10 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 4, top: 2, bottom: 14),
+                                    left: 4,
+                                    top: 2,
+                                    bottom: 14,
+                                  ),
                                   child: Text(
                                     'of daily goal 3.5L',
                                     textAlign: TextAlign.center,
@@ -115,13 +137,18 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
-                                  left: 4, right: 4, top: 8, bottom: 16),
+                                left: 4,
+                                right: 4,
+                                top: 8,
+                                bottom: 16,
+                              ),
                               child: Container(
                                 height: 2,
                                 decoration: BoxDecoration(
                                   color: FitnessAppTheme.background,
                                   borderRadius: const BorderRadius.all(
-                                      Radius.circular(4.0)),
+                                    Radius.circular(4.0),
+                                  ),
                                 ),
                               ),
                             ),
@@ -141,13 +168,14 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                         child: Icon(
                                           Icons.access_time,
                                           color: FitnessAppTheme.grey
-                                              .withOpacity(0.5),
+                                              .withValues(alpha: 0.5),
                                           size: 16,
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 4.0),
+                                        padding: const EdgeInsets.only(
+                                          left: 4.0,
+                                        ),
                                         child: Text(
                                           'Last drink 8:26 AM',
                                           textAlign: TextAlign.center,
@@ -158,7 +186,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                             fontSize: 14,
                                             letterSpacing: 0.0,
                                             color: FitnessAppTheme.grey
-                                                .withOpacity(0.5),
+                                                .withValues(alpha: 0.5),
                                           ),
                                         ),
                                       ),
@@ -176,7 +204,8 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                           width: 24,
                                           height: 24,
                                           child: Image.asset(
-                                              'assets/fitness_app/bell.png'),
+                                            'assets/fitness_app/bell.png',
+                                          ),
                                         ),
                                         Flexible(
                                           child: Text(
@@ -197,7 +226,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                   ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -213,10 +242,11 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                 shape: BoxShape.circle,
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
-                                      color: FitnessAppTheme.nearlyDarkBlue
-                                          .withOpacity(0.4),
-                                      offset: const Offset(4.0, 4.0),
-                                      blurRadius: 8.0),
+                                    color: FitnessAppTheme.nearlyDarkBlue
+                                        .withValues(alpha: 0.4),
+                                    offset: const Offset(4.0, 4.0),
+                                    blurRadius: 8.0,
+                                  ),
                                 ],
                               ),
                               child: Padding(
@@ -228,19 +258,18 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 28,
-                            ),
+                            const SizedBox(height: 28),
                             Container(
                               decoration: BoxDecoration(
                                 color: FitnessAppTheme.nearlyWhite,
                                 shape: BoxShape.circle,
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
-                                      color: FitnessAppTheme.nearlyDarkBlue
-                                          .withOpacity(0.4),
-                                      offset: const Offset(4.0, 4.0),
-                                      blurRadius: 8.0),
+                                    color: FitnessAppTheme.nearlyDarkBlue
+                                        .withValues(alpha: 0.4),
+                                    offset: const Offset(4.0, 4.0),
+                                    blurRadius: 8.0,
+                                  ),
                                 ],
                               ),
                               child: Padding(
@@ -256,30 +285,35 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(left: 16, right: 8, top: 16),
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 8,
+                          top: 16,
+                        ),
                         child: Container(
                           width: 60,
                           height: 160,
                           decoration: BoxDecoration(
                             color: HexColor('#E8EDFE'),
                             borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(80.0),
-                                bottomLeft: Radius.circular(80.0),
-                                bottomRight: Radius.circular(80.0),
-                                topRight: Radius.circular(80.0)),
+                              topLeft: Radius.circular(80.0),
+                              bottomLeft: Radius.circular(80.0),
+                              bottomRight: Radius.circular(80.0),
+                              topRight: Radius.circular(80.0),
+                            ),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
-                                  color: FitnessAppTheme.grey.withOpacity(0.4),
-                                  offset: const Offset(2, 2),
-                                  blurRadius: 4),
+                                color: FitnessAppTheme.grey.withValues(
+                                  alpha: 0.4,
+                                ),
+                                offset: const Offset(2, 2),
+                                blurRadius: 4,
+                              ),
                             ],
                           ),
-                          child: WaveView(
-                            percentageValue: 60.0,
-                          ),
+                          child: WaveView(percentageValue: 60.0),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

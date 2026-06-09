@@ -4,7 +4,7 @@ import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 
 class PopularCourseListView extends StatefulWidget {
-  const PopularCourseListView({Key? key, this.callBack}) : super(key: key);
+  const PopularCourseListView({super.key, this.callBack});
 
   final Function()? callBack;
   @override
@@ -42,6 +42,12 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
               padding: const EdgeInsets.all(8),
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 32.0,
+                crossAxisSpacing: 32.0,
+                childAspectRatio: 0.8,
+              ),
               children: List<Widget>.generate(
                 Category.popularCourseList.length,
                 (int index) {
@@ -66,12 +72,6 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
                   );
                 },
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 32.0,
-                crossAxisSpacing: 32.0,
-                childAspectRatio: 0.8,
-              ),
             );
           }
         },
@@ -82,12 +82,12 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
 
 class CategoryView extends StatelessWidget {
   const CategoryView({
-    Key? key,
+    super.key,
     this.category,
     this.animationController,
     this.animation,
     this.callback,
-  }) : super(key: key);
+  });
 
   final VoidCallback? callback;
   final Category? category;
@@ -231,8 +231,8 @@ class CategoryView extends StatelessWidget {
                             ),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
-                                color: DesignCourseAppTheme.grey.withOpacity(
-                                  0.2,
+                                color: DesignCourseAppTheme.grey.withValues(
+                                  alpha: 0.2,
                                 ),
                                 offset: const Offset(0.0, 0.0),
                                 blurRadius: 6.0,

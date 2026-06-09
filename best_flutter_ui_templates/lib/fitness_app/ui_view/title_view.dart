@@ -7,13 +7,13 @@ class TitleView extends StatelessWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
 
-  const TitleView(
-      {Key? key,
-      this.titleTxt = "",
-      this.subTxt = "",
-      this.animationController,
-      this.animation})
-      : super(key: key);
+  const TitleView({
+    super.key,
+    this.titleTxt = "",
+    this.subTxt = "",
+    this.animationController,
+    this.animation,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,12 @@ class TitleView extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
           opacity: animation!,
-          child: new Transform(
-            transform: new Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation!.value), 0.0),
+          child: Transform(
+            transform: Matrix4.translationValues(
+              0.0,
+              30 * (1.0 - animation!.value),
+              0.0,
+            ),
             child: Container(
               child: Padding(
                 padding: const EdgeInsets.only(left: 24, right: 24),
@@ -74,7 +77,7 @@ class TitleView extends StatelessWidget {
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

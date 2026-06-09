@@ -2,6 +2,8 @@ import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class FeedbackScreen extends StatefulWidget {
+  const FeedbackScreen({super.key});
+
   @override
   _FeedbackScreenState createState() => _FeedbackScreenState();
 }
@@ -21,8 +23,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       child: SafeArea(
         top: false,
         child: Scaffold(
-          backgroundColor:
-              isLightMode ? AppTheme.nearlyWhite : AppTheme.nearlyBlack,
+          backgroundColor: isLightMode
+              ? AppTheme.nearlyWhite
+              : AppTheme.nearlyBlack,
           body: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
@@ -30,9 +33,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top,
-                        left: 16,
-                        right: 16),
+                      top: MediaQuery.of(context).padding.top,
+                      left: 16,
+                      right: 16,
+                    ),
                     child: Image.asset('assets/images/feedbackImage.png'),
                   ),
                   Container(
@@ -40,9 +44,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     child: Text(
                       'Your FeedBack',
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: isLightMode ? Colors.black : Colors.white),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: isLightMode ? Colors.black : Colors.white,
+                      ),
                     ),
                   ),
                   Container(
@@ -51,8 +56,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       'Give your best time for this moment.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 16,
-                          color: isLightMode ? Colors.black : Colors.white),
+                        fontSize: 16,
+                        color: isLightMode ? Colors.black : Colors.white,
+                      ),
                     ),
                   ),
                   _buildComposer(),
@@ -64,13 +70,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         height: 40,
                         decoration: BoxDecoration(
                           color: isLightMode ? Colors.blue : Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4.0)),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(4.0),
+                          ),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                                color: Colors.grey.withOpacity(0.6),
-                                offset: const Offset(4, 4),
-                                blurRadius: 8.0),
+                              color: Colors.grey.withValues(alpha: 0.6),
+                              offset: const Offset(4, 4),
+                              blurRadius: 8.0,
+                            ),
                           ],
                         ),
                         child: Material(
@@ -97,7 +105,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -116,9 +124,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           borderRadius: BorderRadius.circular(8),
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color: Colors.grey.withOpacity(0.8),
-                offset: const Offset(4, 4),
-                blurRadius: 8),
+              color: Colors.grey.withValues(alpha: 0.8),
+              offset: const Offset(4, 4),
+              blurRadius: 8,
+            ),
           ],
         ),
         child: ClipRRect(
@@ -128,8 +137,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             constraints: const BoxConstraints(minHeight: 80, maxHeight: 160),
             color: AppTheme.white,
             child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: 0,
+                bottom: 0,
+              ),
               child: TextField(
                 maxLines: null,
                 onChanged: (String txt) {},
@@ -140,8 +153,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 ),
                 cursorColor: Colors.blue,
                 decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Enter your feedback...'),
+                  border: InputBorder.none,
+                  hintText: 'Enter your feedback...',
+                ),
               ),
             ),
           ),

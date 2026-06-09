@@ -7,8 +7,7 @@ class GlassView extends StatelessWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
 
-  const GlassView({Key? key, this.animationController, this.animation})
-      : super(key: key);
+  const GlassView({super.key, this.animationController, this.animation});
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -16,14 +15,21 @@ class GlassView extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
           opacity: animation!,
-          child: new Transform(
-            transform: new Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation!.value), 0.0),
+          child: Transform(
+            transform: Matrix4.translationValues(
+              0.0,
+              30 * (1.0 - animation!.value),
+              0.0,
+            ),
             child: Column(
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 24, right: 24, top: 0, bottom: 24),
+                    left: 24,
+                    right: 24,
+                    top: 0,
+                    bottom: 24,
+                  ),
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: <Widget>[
@@ -33,10 +39,11 @@ class GlassView extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: HexColor("#D7E0F9"),
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(8.0),
-                                bottomLeft: Radius.circular(8.0),
-                                bottomRight: Radius.circular(8.0),
-                                topRight: Radius.circular(8.0)),
+                              topLeft: Radius.circular(8.0),
+                              bottomLeft: Radius.circular(8.0),
+                              bottomRight: Radius.circular(8.0),
+                              topRight: Radius.circular(8.0),
+                            ),
                             // boxShadow: <BoxShadow>[
                             //   BoxShadow(
                             //       color: FitnessAppTheme.grey.withOpacity(0.2),
@@ -48,7 +55,11 @@ class GlassView extends StatelessWidget {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 68, bottom: 12, right: 16, top: 12),
+                                  left: 68,
+                                  bottom: 12,
+                                  right: 16,
+                                  top: 12,
+                                ),
                                 child: Text(
                                   'Prepare your stomach for lunch with one or two glass of water',
                                   textAlign: TextAlign.left,
@@ -58,7 +69,7 @@ class GlassView extends StatelessWidget {
                                     fontSize: 14,
                                     letterSpacing: 0.0,
                                     color: FitnessAppTheme.nearlyDarkBlue
-                                        .withOpacity(0.6),
+                                        .withValues(alpha: 0.6),
                                   ),
                                 ),
                               ),
@@ -74,7 +85,7 @@ class GlassView extends StatelessWidget {
                           height: 80,
                           child: Image.asset("assets/fitness_app/glass.png"),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

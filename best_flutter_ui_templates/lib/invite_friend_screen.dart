@@ -2,6 +2,8 @@ import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class InviteFriend extends StatefulWidget {
+  const InviteFriend({super.key});
+
   @override
   _InviteFriendState createState() => _InviteFriendState();
 }
@@ -26,9 +28,10 @@ class _InviteFriendState extends State<InviteFriend> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top,
-                    left: 16,
-                    right: 16),
+                  top: MediaQuery.of(context).padding.top,
+                  left: 16,
+                  right: 16,
+                ),
                 child: Image.asset('assets/images/inviteImage.png'),
               ),
               Container(
@@ -62,13 +65,15 @@ class _InviteFriendState extends State<InviteFriend> {
                       height: 40,
                       decoration: BoxDecoration(
                         color: isLightMode ? Colors.blue : Colors.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(4.0),
+                        ),
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                              color: Colors.grey.withOpacity(0.6),
-                              offset: const Offset(4, 4),
-                              blurRadius: 8.0),
+                            color: Colors.grey.withValues(alpha: 0.6),
+                            offset: const Offset(4, 4),
+                            blurRadius: 8.0,
+                          ),
                         ],
                       ),
                       child: Material(
@@ -85,8 +90,9 @@ class _InviteFriendState extends State<InviteFriend> {
                               children: <Widget>[
                                 Icon(
                                   Icons.share,
-                                  color:
-                                      isLightMode ? Colors.white : Colors.black,
+                                  color: isLightMode
+                                      ? Colors.white
+                                      : Colors.black,
                                   size: 22,
                                 ),
                                 Padding(
@@ -109,7 +115,7 @@ class _InviteFriendState extends State<InviteFriend> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

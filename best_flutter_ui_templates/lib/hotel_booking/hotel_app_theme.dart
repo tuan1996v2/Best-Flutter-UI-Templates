@@ -43,7 +43,7 @@ class HotelAppTheme {
       textTheme: _buildTextTheme(base.textTheme),
       primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
       platform: TargetPlatform.iOS,
-      colorScheme: colorScheme.copyWith(background: const Color(0xFFFFFFFF)),
+      colorScheme: colorScheme.copyWith(surface: const Color(0xFFFFFFFF)),
       tabBarTheme: TabBarThemeData(indicatorColor: Colors.white),
     );
   }
