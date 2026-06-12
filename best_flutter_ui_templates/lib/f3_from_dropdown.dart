@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_flutter/custom_dropdown.dart';
 import 'utils/logger.dart';
+import 'utils/debug_overlay_scaffold.dart';
 
 class DropdownScreen extends StatefulWidget {
   const DropdownScreen({super.key});
@@ -83,7 +84,8 @@ class _DropdownScreenState extends State<DropdownScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DebugOverlayScaffold(
+      screenName: 'DropdownScreen',
       appBar: AppBar(title: const Text('DropdownScreen')),
       body: Padding(
         padding: EdgeInsets.all(20),

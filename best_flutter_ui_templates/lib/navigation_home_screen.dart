@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:best_flutter_ui_templates/custom_drawer/drawer_user_controller.dart';
 import 'package:best_flutter_ui_templates/custom_drawer/home_drawer.dart';
 import 'package:best_flutter_ui_templates/feedback_screen.dart';
@@ -32,7 +33,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       child: SafeArea(
         top: false,
         bottom: false,
-        child: Scaffold(
+        child: DebugOverlayScaffold(
+          screenName: 'NavigationHomeScreen',
           backgroundColor: AppTheme.nearlyWhite,
           body: DrawerUserController(
             screenIndex: drawerIndex,

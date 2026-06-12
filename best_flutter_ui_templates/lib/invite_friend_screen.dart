@@ -1,5 +1,6 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:best_flutter_ui_templates/utils/logger.dart';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class InviteFriend extends StatefulWidget {
@@ -23,7 +24,8 @@ class _InviteFriendState extends State<InviteFriend> {
       color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
       child: SafeArea(
         top: false,
-        child: Scaffold(
+        child: DebugOverlayScaffold(
+          screenName: 'InviteFriend',
           backgroundColor: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
           body: Column(
             children: <Widget>[

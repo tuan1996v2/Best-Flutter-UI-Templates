@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'design_course_app_theme.dart';
 
@@ -56,7 +57,8 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
         24.0;
     return Container(
       color: DesignCourseAppTheme.nearlyWhite,
-      child: Scaffold(
+      child: DebugOverlayScaffold(
+        screenName: 'CourseInfoScreen',
         backgroundColor: Colors.transparent,
         body: Stack(
           children: <Widget>[

@@ -1,6 +1,7 @@
 import 'package:best_flutter_ui_templates/hotel_booking/calendar_popup_view.dart';
 import 'package:best_flutter_ui_templates/hotel_booking/hotel_list_view.dart';
 import 'package:best_flutter_ui_templates/hotel_booking/model/hotel_list_data.dart';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -48,7 +49,8 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
-        child: Scaffold(
+        child: DebugOverlayScaffold(
+          screenName: 'HotelHomeScreen',
           body: Stack(
             children: <Widget>[
               InkWell(

@@ -3,6 +3,7 @@ import 'package:best_flutter_ui_templates/fitness_app/fitness_app_home_screen.da
 import 'package:best_flutter_ui_templates/home_test.dart';
 import 'package:best_flutter_ui_templates/hotel_booking/hotel_home_screen.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/introduction_animation_screen.dart';
+import 'package:best_flutter_ui_templates/register_screen.dart';
 import 'package:flutter/widgets.dart';
 
 class HomeList {
@@ -31,6 +32,10 @@ class HomeList {
     HomeList(
       imagePath: 'assets/images/helpImage.png',
       navigateScreen: const HomeTest(),
+    ),
+    HomeList(
+      imagePath: 'assets/images/helpImage.png',
+      navigateScreen: const RegisterScreen(),
     ),
   ];
 }

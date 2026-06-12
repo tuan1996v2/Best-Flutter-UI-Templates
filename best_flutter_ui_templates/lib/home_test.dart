@@ -1,8 +1,9 @@
 import 'package:best_flutter_ui_templates/MyScaffold.dart';
-import 'package:best_flutter_ui_templates/f1_form_basic.dart';
+import 'package:best_flutter_ui_templates/register_screen.dart';
 import 'package:best_flutter_ui_templates/f3_from_dropdown.dart';
 import 'package:best_flutter_ui_templates/vidu_01.dart';
 import 'package:best_flutter_ui_templates/utils/logger.dart';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:flutter/material.dart';
 
 // MyApp đại diện cho Root Widget của ứng dụng.
@@ -83,7 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // Hàm build này được gọi lại mỗi khi setState() được thực thi (ví dụ khi click nút tăng/giảm).
     // Framework Flutter đã được tối ưu hóa cực tốt để việc dựng lại widget tree diễn ra cực nhanh,
     // nên bạn cứ yên tâm build lại toàn bộ widget cần thiết thay vì cập nhật từng phần nhỏ lẻ.
-    return Scaffold(
+    return DebugOverlayScaffold(
+      screenName: 'MyHomePage',
       // Scaffold cung cấp cấu trúc layout chuẩn của Material Design (gồm appBar, body, floatingActionButton...).
       // Trong React Native, bạn thường phải tự dựng bằng SafeAreaView, View, StyleSheet hoặc dùng Screen của React Navigation.
       appBar: AppBar(
@@ -137,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.of(
                   context,
-                ).push(MaterialPageRoute(builder: (_) => FormBasicDemo()));
+                ).push(MaterialPageRoute(builder: (_) => RegisterScreen()));
               },
               child: Text('FormBasicDemo'),
             ),
@@ -193,7 +195,8 @@ class _DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DebugOverlayScaffold(
+      screenName: '_DetailScreen',
       appBar: AppBar(title: Text('Chi tiết')),
       body: Center(
         child: Column(

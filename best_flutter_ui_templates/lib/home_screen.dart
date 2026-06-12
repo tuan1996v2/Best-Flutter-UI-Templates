@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'model/homelist.dart';
 
@@ -38,7 +39,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
     bool isLightMode = brightness == Brightness.light;
-    return Scaffold(
+    return DebugOverlayScaffold(
+      screenName: 'MyHomePage',
       backgroundColor: isLightMode == true
           ? AppTheme.white
           : AppTheme.nearlyBlack,

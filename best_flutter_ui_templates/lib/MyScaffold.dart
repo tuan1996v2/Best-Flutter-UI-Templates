@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:best_flutter_ui_templates/utils/logger.dart';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 
 class MyScaffold extends StatefulWidget {
   const MyScaffold({super.key});
@@ -39,7 +40,8 @@ class _MyScaffoldState extends State<MyScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DebugOverlayScaffold(
+      screenName: 'MyScaffold',
       appBar: AppBar(
         title: Text('Test Scaffold'),
         backgroundColor: Colors.white,

@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class HelpScreen extends StatefulWidget {
@@ -22,7 +23,8 @@ class _HelpScreenState extends State<HelpScreen> {
       color: isLightMode ? AppTheme.nearlyWhite : AppTheme.nearlyBlack,
       child: SafeArea(
         top: false,
-        child: Scaffold(
+        child: DebugOverlayScaffold(
+          screenName: 'HelpScreen',
           backgroundColor: isLightMode
               ? AppTheme.nearlyWhite
               : AppTheme.nearlyBlack,

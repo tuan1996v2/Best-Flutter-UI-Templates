@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_flutter/custom_dropdown.dart';
+import 'package:intl/intl.dart';
 import 'utils/logger.dart';
+import 'utils/debug_overlay_scaffold.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Model: Stores all registration information after successful submission
@@ -10,6 +12,7 @@ class RegistrationData {
   final String phone;
   final String email;
   final String password;
+  final DateTime dateOfBirth;
   final String province;
   final Gender gender;
   final bool agreedToTerms;
@@ -19,6 +22,7 @@ class RegistrationData {
     required this.phone,
     required this.email,
     required this.password,
+    required this.dateOfBirth,
     required this.province,
     required this.gender,
     required this.agreedToTerms,
@@ -31,6 +35,7 @@ class RegistrationData {
         'phone: $phone, '
         'email: $email, '
         'password: ••••••, '
+        'dateOfBirth: ${DateFormat('dd/MM/yyyy').format(dateOfBirth)}, '
         'province: $province, '
         'gender: ${gender.label}, '
         'agreedToTerms: $agreedToTerms)';
@@ -118,14 +123,14 @@ const List<String> kProvinces = [
 // ─────────────────────────────────────────────────────────────
 // Widget
 // ─────────────────────────────────────────────────────────────
-class FormBasicDemo extends StatefulWidget {
-  const FormBasicDemo({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<FormBasicDemo> createState() => _FormBasicDemoState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _FormBasicDemoState extends State<FormBasicDemo> {
+class _RegisterScreenState extends State<RegisterScreen> {
   // ── Controllers ──────────────────────────────────────────
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -146,6 +151,8 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
   final _genderNotifier = ValueNotifier<Gender?>(null);
   final _agreedToTermsNotifier = ValueNotifier<bool>(false);
   final _agreedToTermsErrorNotifier = ValueNotifier<bool>(false);
+  final _dateOfBirthNotifier = ValueNotifier<DateTime?>(null);
+  final _dateOfBirthErrorNotifier = ValueNotifier<bool>(false);
 
   // ── Form key ─────────────────────────────────────────────
   final _formKey = GlobalKey<FormState>();
@@ -181,6 +188,8 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
     _genderNotifier.dispose();
     _agreedToTermsNotifier.dispose();
     _agreedToTermsErrorNotifier.dispose();
+    _dateOfBirthNotifier.dispose();
+    _dateOfBirthErrorNotifier.dispose();
 
     super.dispose();
   }
@@ -262,6 +271,12 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
     if (_selectedProvince == null) {
       hasExtraErrors = true;
     }
+    if (_dateOfBirthNotifier.value == null) {
+      hasExtraErrors = true;
+      _dateOfBirthErrorNotifier.value = true;
+    } else {
+      _dateOfBirthErrorNotifier.value = false;
+    }
     if (gender == null) {
       hasExtraErrors = true;
     }
@@ -280,6 +295,8 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
         String errorMsg = '';
         if (_selectedProvince == null) {
           errorMsg = 'Vui lòng chọn tỉnh/thành phố';
+        } else if (_dateOfBirthNotifier.value == null) {
+          errorMsg = 'Vui lòng chọn ngày sinh';
         } else if (gender == null) {
           errorMsg = 'Vui lòng chọn giới tính';
         } else if (!agreedToTerms) {
@@ -312,6 +329,7 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
       phone: _phoneController.text.trim(),
       email: _emailController.text.trim(),
       password: _passwordController.text,
+      dateOfBirth: _dateOfBirthNotifier.value!,
       province: _selectedProvince!,
       gender: gender!,
       agreedToTerms: agreedToTerms,
@@ -353,6 +371,8 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
     _agreedToTermsErrorNotifier.value = false;
     _passwordObscureNotifier.value = true;
     _confirmPasswordObscureNotifier.value = true;
+    _dateOfBirthNotifier.value = null;
+    _dateOfBirthErrorNotifier.value = false;
     _selectedProvince = null;
     setState(() {
       _registrationData = null;
@@ -458,11 +478,188 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
   }
 
   // ─────────────────────────────────────────────────────────
+  // Date of Birth Picker
+  // ─────────────────────────────────────────────────────────
+  Future<void> _showDateOfBirthPicker() async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate:
+          _dateOfBirthNotifier.value ??
+          DateTime(now.year - 18, now.month, now.day),
+      firstDate: DateTime(1920),
+      lastDate: now,
+      helpText: 'CHỌN NGÀY SINH',
+      cancelText: 'HỦY',
+      confirmText: 'CHỌN',
+      fieldLabelText: 'Ngày sinh',
+      fieldHintText: 'dd/MM/yyyy',
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.indigo,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.grey.shade900,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.indigo,
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            datePickerTheme: DatePickerThemeData(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              headerBackgroundColor: Colors.indigo,
+              headerForegroundColor: Colors.white,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      _dateOfBirthNotifier.value = picked;
+      _dateOfBirthErrorNotifier.value = false;
+    }
+  }
+
+  /// Computes human-readable age from a given birth date.
+  String _computeAge(DateTime birthDate) {
+    final now = DateTime.now();
+    int years = now.year - birthDate.year;
+    if (now.month < birthDate.month ||
+        (now.month == birthDate.month && now.day < birthDate.day)) {
+      years--;
+    }
+    return '$years tuổi';
+  }
+
+  Widget _buildDateOfBirthPicker() {
+    return ValueListenableBuilder<bool>(
+      valueListenable: _dateOfBirthErrorNotifier,
+      builder: (context, hasError, _) {
+        return ValueListenableBuilder<DateTime?>(
+          valueListenable: _dateOfBirthNotifier,
+          builder: (context, selectedDate, _) {
+            final hasDate = selectedDate != null;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: _showDateOfBirthPicker,
+                  borderRadius: BorderRadius.circular(12),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: hasError
+                          ? Colors.red.shade50
+                          : (hasDate
+                                ? Colors.indigo.shade50
+                                : Colors.grey.shade50),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: hasError
+                            ? Colors.red.shade400
+                            : (hasDate
+                                  ? Colors.indigo.shade400
+                                  : Colors.grey.shade300),
+                        width: (hasDate || hasError) ? 2 : 1.2,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.calendar_today_outlined,
+                          color: hasError
+                              ? Colors.red.shade400
+                              : (hasDate
+                                    ? Colors.indigo.shade600
+                                    : Colors.grey.shade500),
+                          size: 22,
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                hasDate
+                                    ? DateFormat(
+                                        'dd/MM/yyyy',
+                                      ).format(selectedDate)
+                                    : 'Chọn ngày sinh',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: hasDate
+                                      ? FontWeight.w600
+                                      : FontWeight.normal,
+                                  color: hasDate
+                                      ? Colors.grey.shade900
+                                      : Colors.grey.shade500,
+                                ),
+                              ),
+                              if (hasDate) ...[
+                                const SizedBox(height: 2),
+                                Text(
+                                  _computeAge(selectedDate),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.indigo.shade400,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_drop_down,
+                          color: hasDate
+                              ? Colors.indigo.shade400
+                              : Colors.grey.shade400,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                if (hasError)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12, top: 6),
+                    child: Text(
+                      'Vui lòng chọn ngày sinh',
+                      style: TextStyle(
+                        color: Colors.red.shade700,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // ─────────────────────────────────────────────────────────
   // Build
   // ─────────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DebugOverlayScaffold(
+      screenName: 'register_screen',
       backgroundColor: const Color(0xFFF6F8FB),
       appBar: AppBar(
         title: const Text(
@@ -690,7 +887,12 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
               ),
               const SizedBox(height: 24),
 
-              // ── 7. Radio chọn giới tính ──
+              // ── 7. Chọn ngày sinh ──
+              _buildSectionLabel('Ngày sinh *', Icons.cake_outlined),
+              _buildDateOfBirthPicker(),
+              const SizedBox(height: 24),
+
+              // ── 8. Radio chọn giới tính ──
               _buildSectionLabel('Giới tính *', Icons.wc_outlined),
               ValueListenableBuilder<Gender?>(
                 valueListenable: _genderNotifier,
@@ -755,7 +957,7 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
               ),
               const SizedBox(height: 24),
 
-              // ── 8. Checkbox đồng ý điều khoản ──
+              // ── 9. Checkbox đồng ý điều khoản ──
               ValueListenableBuilder<bool>(
                 valueListenable: _agreedToTermsErrorNotifier,
                 builder: (context, hasError, _) {
@@ -997,6 +1199,14 @@ class _FormBasicDemoState extends State<FormBasicDemo> {
                       Icons.location_city_outlined,
                       'Tỉnh/Thành phố',
                       _registrationData!.province,
+                    ),
+                    const SizedBox(height: 12),
+                    _buildResultRow(
+                      Icons.cake_outlined,
+                      'Ngày sinh',
+                      DateFormat(
+                        'dd/MM/yyyy',
+                      ).format(_registrationData!.dateOfBirth),
                     ),
                     const SizedBox(height: 12),
                     _buildResultRow(

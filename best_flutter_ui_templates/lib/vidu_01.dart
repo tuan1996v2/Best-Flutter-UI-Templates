@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:best_flutter_ui_templates/utils/logger.dart';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 
 class Vidu01 extends StatelessWidget {
   Vidu01({super.key});
@@ -47,7 +48,8 @@ class Vidu01 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DebugOverlayScaffold(
+      screenName: 'Vidu01',
       appBar: AppBar(title: const Text('Vidu01')),
       body: Center(
         child: Column(
