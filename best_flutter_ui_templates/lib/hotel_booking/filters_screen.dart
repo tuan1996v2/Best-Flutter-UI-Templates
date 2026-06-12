@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:best_flutter_ui_templates/utils/logger.dart';
 import 'range_slider_view.dart';
 import 'slider_view.dart';
 import 'hotel_app_theme.dart';
@@ -323,7 +324,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             break;
           }
         } catch (e) {
-          print(e);
+          logger.e('Error in popular filter list UI: $e');
         }
       }
       noList.add(

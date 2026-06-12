@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/introduction_animation/components/care_view.dart';
+import 'package:best_flutter_ui_templates/utils/logger.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/center_next_button.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/mood_diary_vew.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/relax_view.dart';
@@ -38,7 +39,7 @@ class _IntroductionAnimationScreenState
 
   @override
   Widget build(BuildContext context) {
-    print(_animationController?.value);
+    logger.d('Animation controller value: ${_animationController?.value}');
     return Scaffold(
       backgroundColor: Color(0xffF7EBE1),
       body: ClipRect(

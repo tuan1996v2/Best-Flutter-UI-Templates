@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/utils/logger.dart';
 import 'package:flutter/material.dart';
 
 class InviteFriend extends StatefulWidget {
@@ -81,7 +82,7 @@ class _InviteFriendState extends State<InviteFriend> {
                         child: InkWell(
                           onTap: () {
                             //method here for functionality
-                            print('Share Action.');
+                            logger.i('Share Action.');
                           },
                           child: Center(
                             child: Row(
