@@ -1,10 +1,14 @@
 import 'package:best_flutter_ui_templates/MyScaffold.dart';
 import 'package:best_flutter_ui_templates/register_screen.dart';
 import 'package:best_flutter_ui_templates/f3_from_dropdown.dart';
+import 'package:best_flutter_ui_templates/userMS/view/UserDetailScreen.dart';
+import 'package:best_flutter_ui_templates/userMS/view/UserListScreen.dart';
+import 'package:best_flutter_ui_templates/userMS_API/view/UserListScreenAPI.dart';
 import 'package:best_flutter_ui_templates/vidu_01.dart';
 import 'package:best_flutter_ui_templates/utils/logger.dart';
 import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:best_flutter_ui_templates/userMS/model/User.dart';
 
 // MyApp đại diện cho Root Widget của ứng dụng.
 // Kế thừa StatelessWidget vì nó không tự quản lý trạng thái (state) nội bộ
@@ -149,7 +153,40 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                 ).push(MaterialPageRoute(builder: (_) => DropdownScreen()));
               },
-              child: Text('DropdownScreen'),
+              child: Text('DropdownScreenaaaaaa'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => UserDetailScreen(
+                      user: User(
+                        name: 'Nguyễn Văn A',
+                        email: 'a@gmail.com',
+                        phone: '0987654321',
+                        dateOfBirth: DateTime(1995, 1, 1),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              child: Text('UserDetailScreen'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => UserListScreen()));
+              },
+              child: Text('UserList SQLite'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => UserListScreenAPI()));
+              },
+              child: Text('UserList API'),
             ),
           ],
         ),

@@ -34,7 +34,12 @@ dependencies:
   animations: ^2.2.0
   dropdown_flutter: ^1.0.3
   logger: ^2.7.0
-
+  sqflite: ^2.4.3
+  path: ^1.9.1
+  image_picker: ^1.2.2
+  http: ^1.6.0
+  dio: ^5.9.2
+  pretty_dio_logger: ^1.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
