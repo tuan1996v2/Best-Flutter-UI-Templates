@@ -23,8 +23,35 @@ class AuthService {
   static const String _keyToken = 'auth_token';
   static const String _keyIsLoggedIn = 'auth_is_logged_in';
   static const String _keyBiometricEnabled = 'auth_biometric_enabled';
+  static const String _keyPasswordHistory = 'auth_password_history';
 
   // ==================== LƯU TRỮ THÔNG TIN ====================
+
+  /// Lấy danh sách 3 mật khẩu cũ gần nhất
+  Future<List<String>> getPasswordHistory() async {
+    final value = await _storage.read(key: _keyPasswordHistory);
+    if (value == null || value.isEmpty) return [];
+    try {
+      return value.split(',');
+    } catch (e) {
+      logger.e('AuthService: Lỗi đọc lịch sử mật khẩu: $e');
+      return [];
+    }
+  }
+
+  /// Thêm mật khẩu mới vào lịch sử (giữ lại tối đa 3 mật khẩu gần nhất)
+  Future<void> addPasswordToHistory(String password) async {
+    final history = await getPasswordHistory();
+    if (history.isNotEmpty && history.first == password) return;
+
+    history.insert(0, password);
+    if (history.length > 3) {
+      history.removeRange(3, history.length);
+    }
+
+    await _storage.write(key: _keyPasswordHistory, value: history.join(','));
+    logger.d('AuthService: Đã lưu lịch sử mật khẩu');
+  }
 
   /// Lưu thông tin đăng nhập vào bộ nhớ an toàn
   Future<void> saveCredentials({
@@ -32,6 +59,12 @@ class AuthService {
     required String password,
     String? token,
   }) async {
+    // Lưu mật khẩu hiện tại vào lịch sử nếu nó khác mật khẩu mới
+    final oldPassword = await getSavedPassword();
+    if (oldPassword != null && oldPassword != password) {
+      await addPasswordToHistory(oldPassword);
+    }
+
     await _storage.write(key: _keyUsername, value: username);
     await _storage.write(key: _keyPassword, value: password);
     if (token != null) {

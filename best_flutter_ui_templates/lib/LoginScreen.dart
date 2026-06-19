@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:best_flutter_ui_templates/utils/debug_overlay_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:best_flutter_ui_templates/auth/AuthService.dart';
@@ -29,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen>
   bool _canUseBiometrics = false;
   bool _hasSavedCredentials = false;
   bool _biometricEnabled = false;
+  List<String> _passwordHistory = [];
 
   late AnimationController _fadeController;
   late AnimationController _slideController;
@@ -69,11 +71,13 @@ class _LoginScreenState extends State<LoginScreen>
     final isLoggedIn = await _authService.isLoggedIn();
     final bioEnabled = await _authService.isBiometricEnabled();
     final savedUsername = await _authService.getSavedUsername();
+    final history = await _authService.getPasswordHistory();
 
     setState(() {
       _canUseBiometrics = canBio;
       _hasSavedCredentials = isLoggedIn;
       _biometricEnabled = bioEnabled;
+      _passwordHistory = history;
       if (savedUsername != null) {
         _usernameController.text = savedUsername;
       }
@@ -84,6 +88,80 @@ class _LoginScreenState extends State<LoginScreen>
     //   await Future.delayed(const Duration(milliseconds: 600));
     //   _loginWithBiometrics();
     // }
+  }
+
+  bool _hasSequentialCharacters(String val) {
+    if (val.length < 3) return false;
+    for (int i = 0; i < val.length - 2; i++) {
+      int c1 = val.codeUnitAt(i);
+      int c2 = val.codeUnitAt(i + 1);
+      int c3 = val.codeUnitAt(i + 2);
+
+      // Tăng dần liên tiếp (vd: 123, abc)
+      if (c2 == c1 + 1 && c3 == c2 + 1) return true;
+      // Giảm dần liên tiếp (vd: 321, cba)
+      if (c2 == c1 - 1 && c3 == c2 - 1) return true;
+    }
+    return false;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Vui lòng nhập mật khẩu';
+    }
+
+    // 1. Password Complexity (Từng kiểm tra riêng lẻ để báo lỗi chi tiết)
+    if (value.length < 12) {
+      return 'Mật khẩu phải từ 12 ký tự trở lên';
+    }
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return 'Mật khẩu phải chứa ít nhất 1 chữ cái in hoa (A-Z)';
+    }
+    if (!RegExp(r'[a-z]').hasMatch(value)) {
+      return 'Mật khẩu phải chứa ít nhất 1 chữ cái in thường (a-z)';
+    }
+    if (!RegExp(r'\d').hasMatch(value)) {
+      return 'Mật khẩu phải chứa ít nhất 1 chữ số (0-9)';
+    }
+    if (!RegExp(r'[!@#$&*~%^()_+\-=\[\]{}|;:",./<>?]').hasMatch(value)) {
+      return 'Mật khẩu phải chứa ít nhất 1 ký tự đặc biệt (ví dụ: @, #, \$, ...)';
+    }
+
+    // 2. Sequential Character Constraint
+    if (_hasSequentialCharacters(value)) {
+      return 'Mật khẩu không được chứa chuỗi ký tự liên tiếp (ví dụ: 123, abc)';
+    }
+
+    // 3. Repetition Constraint
+    final repetitionRegex = RegExp(r'(.)\1\1');
+    if (repetitionRegex.hasMatch(value)) {
+      return 'Mật khẩu không được lặp lại một ký tự quá 2 lần liên tiếp (ví dụ: aaa)';
+    }
+
+    // 4. Dictionary/Common Patterns
+    final commonPatternRegex = RegExp(
+      r'(password|matkhau|dangnhap|12345678|admin)',
+      caseSensitive: false,
+    );
+    if (commonPatternRegex.hasMatch(value)) {
+      return 'Mật khẩu chứa từ thông dụng không an toàn';
+    }
+
+    // 5. Personal Info Check
+    final username = _usernameController.text.trim();
+    if (username.isNotEmpty) {
+      final usernameRegex = RegExp(RegExp.escape(username), caseSensitive: false);
+      if (usernameRegex.hasMatch(value)) {
+        return 'Mật khẩu không được chứa tên đăng nhập';
+      }
+    }
+
+    // 6. History Check
+    if (_passwordHistory.contains(value)) {
+      return 'Mật khẩu không được trùng với 3 mật khẩu cũ gần nhất';
+    }
+
+    return null;
   }
 
   @override
@@ -115,6 +193,11 @@ class _LoginScreenState extends State<LoginScreen>
         password: password,
         token: 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
       );
+
+      final updatedHistory = await _authService.getPasswordHistory();
+      setState(() {
+        _passwordHistory = updatedHistory;
+      });
 
       // Nếu thiết bị hỗ trợ sinh trắc, hỏi người dùng bật
       if (_canUseBiometrics && !_biometricEnabled) {
@@ -235,7 +318,8 @@ class _LoginScreenState extends State<LoginScreen>
       ),
     );
 
-    return Scaffold(
+    return DebugOverlayScaffold(
+      screenName: 'LoginScreen',
       body: Stack(
         children: [
           // Background gradient iOS 26
@@ -467,15 +551,7 @@ class _LoginScreenState extends State<LoginScreen>
                   label: 'Mật khẩu',
                   icon: Icons.lock_outline_rounded,
                   isPassword: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Vui lòng nhập mật khẩu';
-                    }
-                    if (value.length < 4) {
-                      return 'Mật khẩu phải từ 4 ký tự trở lên';
-                    }
-                    return null;
-                  },
+                  validator: _validatePassword,
                 ),
 
                 const SizedBox(height: 12),
