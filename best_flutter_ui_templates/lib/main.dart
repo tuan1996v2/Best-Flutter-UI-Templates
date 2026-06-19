@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'LoginScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         platform: TargetPlatform.iOS,
         dividerTheme: DividerThemeData(color: Color(0xFFE0E0E0)),
       ),
-      home: NavigationHomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }

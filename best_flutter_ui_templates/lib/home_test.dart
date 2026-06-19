@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/LoginScreen.dart';
 import 'package:best_flutter_ui_templates/MyScaffold.dart';
 import 'package:best_flutter_ui_templates/register_screen.dart';
 import 'package:best_flutter_ui_templates/f3_from_dropdown.dart';
@@ -187,6 +188,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ).push(MaterialPageRoute(builder: (_) => UserListScreenAPI()));
               },
               child: Text('UserList API'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => LoginScreen()));
+              },
+              child: Text('Login Screen'),
             ),
           ],
         ),

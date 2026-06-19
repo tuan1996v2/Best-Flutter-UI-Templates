@@ -1,6 +1,7 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
-import 'package:best_flutter_ui_templates/utils/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:best_flutter_ui_templates/auth/AuthService.dart';
+import 'package:best_flutter_ui_templates/LoginScreen.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({
@@ -178,8 +179,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
     );
   }
 
-  void onTapped() {
-    logger.d('Doing Something...'); // Log to console.
+  void onTapped() async {
+    await AuthService.instance.clearAll();
+    if (mounted) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (route) => false,
+      );
+    }
   }
 
   Widget inkwell(DrawerList listData) {
